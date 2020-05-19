@@ -8,9 +8,24 @@ ff02::2 ip6-allrouters
 
 ## My custom filters
 0.0.0.0 min-api.cryptocompare.com
-0.0.0.0 www.alimama.com
-0.0.0.0 na61-na62.wagbridge.advertisement.tanx.com
-0.0.0.0 mobile.pipe.aria.microsoft.com
-" > /etc/hosts
+" > ~/test_hosts.txt
 
-curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | cat >> /etc/hosts 
+curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | cat >> ~/test_hosts.txt
+
+## Define an array of urls from different sources to download filter lists
+declare -a URLS=(
+https://mirror1.malwaredomains.com/files/justdomains
+https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
+https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+)
+
+## Iterate and add to hosts file
+for i in $URLS; do
+  while read line; do
+    if [[ "$line" =~ \#.* || -z "$line" ]]; then
+      echo $line >> ~/test_hosts.txt
+    else 
+      echo "0.0.0.0 $line" >> ~/test_hosts.txt
+    fi
+  done < <(curl $i)
+done
