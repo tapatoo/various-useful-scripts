@@ -8,9 +8,9 @@ ff02::2 ip6-allrouters
 
 ## My custom filters
 0.0.0.0 min-api.cryptocompare.com
-" > ~/test_hosts.txt
+" > /etc/hosts
 
-curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | cat >> ~/test_hosts.txt
+curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | cat >> /etc/hosts
 
 ## Define an array of urls from different sources to download filter lists
 declare -a URLS=(
@@ -23,9 +23,9 @@ https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
 for i in $URLS; do
   while read line; do
     if [[ "$line" =~ \#.* || -z "$line" ]]; then
-      echo $line >> ~/test_hosts.txt
+      echo $line >> /etc/hosts
     else 
-      echo "0.0.0.0 $line" >> ~/test_hosts.txt
+      echo "0.0.0.0 $line" >> /etc/hosts
     fi
   done < <(curl $i)
 done
