@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cp /etc/hosts /etc/hosts.bak
+
 echo "127.0.0.1       localhost
 127.0.1.1       $(hostname)
 ::1     localhost ip6-localhost ip6-loopback
