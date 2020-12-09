@@ -20,7 +20,6 @@ sudo crontab -e
 
 Crontab entries:
 ```
-@reboot /usr/local/bin/hosts_update.sh
 55 19 * * * curl https://raw.githubusercontent.com/tapatoo/various-useful-scripts/master/ads-filter/hosts_update.sh | cat > /usr/local/bin/hosts_update.sh
 0 20 * * * /usr/local/bin/hosts_update.sh
 ```
